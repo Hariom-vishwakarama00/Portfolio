@@ -7,6 +7,260 @@
     <title>Portfolio | Hariom Vishwakarama </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+      /* ── Cinematic poster hero ── */
+      #poster-hero {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        background: #0a0000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Deep red radial background */
+      #poster-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 80% 70% at 50% 40%, #8b0000 0%, #3d0000 45%, #0a0000 100%);
+        z-index: 0;
+      }
+
+      /* Smoke / grain texture overlay */
+      #poster-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+        background-size: 200px 200px;
+        mix-blend-mode: overlay;
+        opacity: 0.5;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* Dragon SVG container */
+      #dragon-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0.22;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #dragon-bg svg {
+        width: 90%;
+        max-width: 900px;
+        height: auto;
+        filter: drop-shadow(0 0 40px #ff2200);
+      }
+
+      /* Horizontal smoke streaks */
+      .smoke-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        background:
+          repeating-linear-gradient(
+            8deg,
+            transparent 0%,
+            transparent 18%,
+            rgba(180,0,0,0.04) 20%,
+            transparent 22%
+          ),
+          repeating-linear-gradient(
+            -5deg,
+            transparent 0%,
+            transparent 28%,
+            rgba(255,40,0,0.03) 30%,
+            transparent 32%
+          );
+      }
+
+      /* The photo */
+      #hero-photo-wrap {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: -40px;
+      }
+      #hero-photo {
+        width: min(340px, 72vw);
+        height: auto;
+        display: block;
+        /* High-contrast cinematic filter */
+        filter:
+          contrast(1.55)
+          brightness(0.88)
+          saturate(0.6)
+          sepia(0.35)
+          drop-shadow(0 0 32px #ff1100cc)
+          drop-shadow(0 0 6px #000);
+        border-radius: 4px;
+      }
+
+      /* Strong glowing edge light on the photo */
+      #hero-photo-wrap::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 60%,
+          rgba(139,0,0,0.7) 100%
+        );
+        z-index: 6;
+        pointer-events: none;
+        border-radius: 4px;
+        width: min(340px, 72vw);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* Red rim-light glow around the figure */
+      .rim-glow {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(360px, 76vw);
+        height: 70%;
+        background: radial-gradient(ellipse 60% 80% at 50% 50%,
+          rgba(220,0,0,0.35) 0%,
+          transparent 70%);
+        z-index: 4;
+        pointer-events: none;
+        filter: blur(18px);
+      }
+
+      /* Text layer */
+      #poster-text {
+        position: relative;
+        z-index: 7;
+        text-align: center;
+        padding: 0 1.5rem 2.5rem;
+      }
+
+      .poster-tag {
+        display: inline-block;
+        letter-spacing: 0.35em;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: #ff6655;
+        border: 1px solid #ff2200;
+        padding: 3px 14px;
+        margin-bottom: 0.9rem;
+        background: rgba(139,0,0,0.25);
+      }
+
+      .poster-name {
+        font-size: clamp(2.4rem, 8vw, 5rem);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        /* Comic-book / poster text treatment */
+        color: #fff;
+        text-shadow:
+          3px 3px 0 #8b0000,
+          6px 6px 0 #4a0000,
+          0 0 40px rgba(220,0,0,0.6),
+          0 0 80px rgba(180,0,0,0.3);
+        -webkit-text-stroke: 1px rgba(255,60,0,0.4);
+        margin-bottom: 0.5rem;
+      }
+
+      .poster-sub {
+        font-size: clamp(0.8rem, 2vw, 1.1rem);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #cc2200;
+        text-shadow: 0 0 12px #ff2200;
+        margin-bottom: 1.8rem;
+      }
+
+      .poster-divider {
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #cc0000, transparent);
+        margin: 0 auto 1.4rem;
+      }
+
+      .poster-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+      .poster-btn-outline {
+        border: 2px solid #cc2200;
+        color: #ff5544;
+        padding: 0.65rem 2rem;
+        border-radius: 2px;
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        font-size: 0.85rem;
+        transition: background 0.2s, color 0.2s;
+        text-shadow: 0 0 8px #ff2200;
+        box-shadow: inset 0 0 12px rgba(180,0,0,0.15), 0 0 12px rgba(180,0,0,0.3);
+      }
+      .poster-btn-outline:hover {
+        background: rgba(180,0,0,0.35);
+        color: #fff;
+      }
+      .poster-btn-solid {
+        background: linear-gradient(135deg, #8b0000, #cc0000);
+        color: #fff;
+        padding: 0.65rem 2rem;
+        border-radius: 2px;
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        font-size: 0.85rem;
+        border: 1px solid #ff2200;
+        transition: filter 0.2s;
+        box-shadow: 0 4px 20px rgba(180,0,0,0.5);
+      }
+      .poster-btn-solid:hover {
+        filter: brightness(1.2);
+      }
+
+      /* Vertical red side bars (poster frame) */
+      .poster-side-left,
+      .poster-side-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(to bottom, transparent, #cc0000 30%, #cc0000 70%, transparent);
+        z-index: 8;
+        opacity: 0.6;
+      }
+      .poster-side-left  { left: 8px; }
+      .poster-side-right { right: 8px; }
+
+      /* Horizontal top/bottom lines */
+      .poster-top-line,
+      .poster-bot-line {
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        height: 4px;
+        background: linear-gradient(to right, transparent, #cc0000 30%, #cc0000 70%, transparent);
+        z-index: 8;
+        opacity: 0.6;
+      }
+      .poster-top-line { top: 8px; }
+      .poster-bot-line { bottom: 8px; }
+    </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
   <div class="max-w-6xl mx-auto">
@@ -20,17 +274,131 @@
         </div>
     </nav>
 
-    <header class="min-h-[80vh] flex flex-col justify-center items-center text-center px-6 pt-10">
-        <p class="uppercase tracking-[0.3em] text-xs text-blue-300 mb-3">Cybersecurity Expert</p>
-        <h2 class="text-5xl md:text-7xl font-extrabold mb-4">Hariom Vishwakarama</h2>
-        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8">
-          B.Tech IoT student growing into a cybersecurity specialist and full-stack web developer. I secure and ship modern web apps with clean code, strong auth, and tested defenses.
-        </p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <a href="#work" class="border-2 border-blue-500 text-blue-500 px-8 py-3 rounded-full hover:bg-blue-500 hover:text-white transition">View Projects</a>
-          <a href="#contact" class="bg-blue-600 px-8 py-3 rounded-full hover:bg-blue-700 transition">Hire / Collaborate</a>
+    <!-- ═══════════════════════════════════════════
+         CINEMATIC TAMIL GANGSTER POSTER HERO
+         ═══════════════════════════════════════════ -->
+    <section id="poster-hero">
+      <!-- Frame borders -->
+      <div class="poster-side-left"></div>
+      <div class="poster-side-right"></div>
+      <div class="poster-top-line"></div>
+      <div class="poster-bot-line"></div>
+
+      <!-- Dragon background SVG -->
+      <div id="dragon-bg" aria-hidden="true">
+        <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <!-- Dragon body – curving serpentine shape -->
+          <g stroke="#ff2200" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Main spine -->
+            <path stroke-width="22" opacity="0.9"
+              d="M50,540
+                 C120,480 160,400 220,340
+                 C280,280 330,260 390,230
+                 C450,200 490,170 530,130
+                 C570,90  610,60  670,40
+                 C720,22  760,18  810,30"/>
+            <!-- Neck / upper spine fill -->
+            <path stroke-width="14" opacity="0.7"
+              d="M50,520
+                 C130,455 175,375 235,315
+                 C295,255 350,235 410,205
+                 C470,175 510,145 550,105
+                 C590,65  640,42  700,28"/>
+            <!-- Tail -->
+            <path stroke-width="8" opacity="0.5"
+              d="M50,540 C30,565 20,580 10,600"/>
+            <!-- Wings – left -->
+            <path stroke-width="10" opacity="0.75" fill="rgba(139,0,0,0.3)"
+              d="M390,230 C350,180 290,120 240,80 C220,65 200,55 220,90
+                 C240,125 290,160 350,195 Z"/>
+            <!-- Wings – right -->
+            <path stroke-width="10" opacity="0.75" fill="rgba(139,0,0,0.3)"
+              d="M390,230 C430,175 500,110 560,75 C580,63 600,55 580,90
+                 C560,125 500,165 440,205 Z"/>
+            <!-- Wing veins left -->
+            <path stroke-width="3" opacity="0.5"
+              d="M390,230 C365,195 330,155 280,110"/>
+            <path stroke-width="3" opacity="0.5"
+              d="M370,215 C345,180 310,145 260,100"/>
+            <!-- Wing veins right -->
+            <path stroke-width="3" opacity="0.5"
+              d="M400,225 C430,190 470,155 520,115"/>
+            <path stroke-width="3" opacity="0.5"
+              d="M415,215 C445,180 490,145 545,105"/>
+            <!-- Head -->
+            <path stroke-width="5" opacity="0.85" fill="rgba(180,0,0,0.4)"
+              d="M810,30 C840,20 870,15 880,25 C890,40 875,60 855,65
+                 C830,72 800,60 790,45 Z"/>
+            <!-- Snout / jaw -->
+            <path stroke-width="4" opacity="0.8"
+              d="M880,25 C895,30 905,40 900,52 C895,62 878,65 870,60"/>
+            <!-- Eye -->
+            <circle cx="858" cy="38" r="6" fill="#ff4400" opacity="0.95"
+              stroke="#ff6600" stroke-width="2"/>
+            <circle cx="860" cy="37" r="2" fill="#fff" opacity="0.8"/>
+            <!-- Horns -->
+            <path stroke-width="4" d="M862,20 C865,5 872,0 875,8"/>
+            <path stroke-width="3" d="M850,22 C848,8 840,4 838,14"/>
+            <!-- Fire breath -->
+            <path stroke-width="6" opacity="0.6" stroke="#ff6600"
+              d="M900,52 C920,60 940,55 955,48 C965,43 970,35 960,30"/>
+            <path stroke-width="3" opacity="0.4" stroke="#ffaa00"
+              d="M900,52 C925,68 950,65 965,55"/>
+            <path stroke-width="2" opacity="0.3" stroke="#ffcc00"
+              d="M900,52 C930,75 960,75 975,62"/>
+            <!-- Claws -->
+            <path stroke-width="5" opacity="0.7"
+              d="M220,340 C200,360 185,375 170,390 C160,400 158,412 170,408
+                 C182,404 195,388 210,370"/>
+            <path stroke-width="4" opacity="0.6"
+              d="M222,342 C210,368 205,385 210,395 C215,403 225,400 228,390
+                 C231,378 230,360 228,345"/>
+            <path stroke-width="4" opacity="0.6"
+              d="M218,338 C195,348 178,355 168,368 C160,378 165,388 175,382
+                 C188,374 205,360 218,342"/>
+            <!-- Scales pattern along body -->
+            <path stroke-width="2" opacity="0.4"
+              d="M300,300 C310,290 320,295 315,305 Z
+                 M360,260 C370,250 380,255 375,265 Z
+                 M420,225 C430,215 440,220 435,230 Z
+                 M480,190 C490,180 500,185 495,195 Z
+                 M540,155 C550,145 560,150 555,160 Z
+                 M600,115 C610,105 620,110 615,120 Z
+                 M660,78 C670,68 680,73 675,83 Z"/>
+          </g>
+          <!-- Glowing ember particles -->
+          <g fill="#ff4400" opacity="0.6">
+            <circle cx="750" cy="80"  r="3"/>
+            <circle cx="720" cy="95"  r="2"/>
+            <circle cx="780" cy="65"  r="2.5"/>
+            <circle cx="700" cy="110" r="2"/>
+            <circle cx="760" cy="50"  r="1.5"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Smoke streaks -->
+      <div class="smoke-layer" aria-hidden="true"></div>
+      <!-- Rim glow around figure -->
+      <div class="rim-glow" aria-hidden="true"></div>
+
+      <!-- Hero photo -->
+      <div id="hero-photo-wrap">
+        <img id="hero-photo" src="home.jpg" alt="Professional headshot of Hariom Vishwakarama" loading="eager">
+      </div>
+
+      <!-- Poster text -->
+      <div id="poster-text">
+        <span class="poster-tag">Cybersecurity · Web Dev · Fighter</span>
+        <h2 class="poster-name">Hariom<br>Vishwakarama</h2>
+        <p class="poster-sub">B.Tech IoT &nbsp;·&nbsp; Full-Stack &nbsp;·&nbsp; AppSec</p>
+        <div class="poster-divider"></div>
+        <div class="poster-buttons">
+          <a href="#work"    class="poster-btn-outline">View Projects</a>
+          <a href="#contact" class="poster-btn-solid">Hire / Collaborate</a>
         </div>
-    </header>
+      </div>
+    </section>
 
     <section id="about" class="py-16 bg-gray-800 rounded-3xl mx-3 md:mx-0">
       <div class="max-w-4xl mx-auto px-6 space-y-4 text-lg leading-relaxed text-gray-300">
