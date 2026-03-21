@@ -22,8 +22,7 @@ This is my personal portfolio website created to showcase my skills, projects, a
 ![Portfolio](home.jpg)
 
 🔗 Live Demo
-
-http://www.hariomvishwakarama.me/
+https://hariomvishwakarama.me/
 
 📂 How to Run Locally
 
