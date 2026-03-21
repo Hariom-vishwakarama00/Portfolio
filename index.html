@@ -3,114 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hariom Vishwakarama — cybersecurity-focused web developer building secure, performant applications.">
-    <title>Portfolio | Hariom Vishwakarama </title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Hariom Vishwakarama | Cyber Security & Web Developer</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Theme Variables --- */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --primary-color: #007bff; 
+            --secondary-color: #00c853; 
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dark Theme Settings (Default) */
+        body.dark-theme {
+            --bg-color: #0b0f19;
+            --text-color: #e2e8f0;
+            --card-bg: #151b2b;
+            --primary-color: #00d2ff;
+            --secondary-color: #3a7bd5;
+            --nav-bg: rgba(11, 15, 25, 0.85);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Basic Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .logo span { color: var(--secondary-color); }
+
+        .nav-links { list-style: none; display: flex; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        #theme-toggle { background: none; border: none; font-size: 1.2rem; color: var(--text-color); cursor: pointer; }
+        .hamburger { display: none; font-size: 1.5rem; color: var(--text-color); cursor: pointer; }
+
+        /* --- Global Sections --- */
+        section { min-height: 100vh; padding: 120px 8% 60px; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; }
+        .section-title { font-size: 2.5rem; margin-bottom: 40px; color: var(--text-color); position: relative; }
+        .section-title::after { content: ''; position: absolute; width: 60px; height: 4px; background: var(--primary-color); bottom: -10px; left: 50%; transform: translateX(-50%); }
+
+        /* --- Buttons --- */
+        .btn { padding: 12px 30px; background: var(--primary-color); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; display: inline-block; transition: 0.3s; margin-top: 15px; border: none; cursor: pointer; }
+        .btn:hover { background: var(--secondary-color); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 210, 255, 0.4); }
+
+        /* --- Home Section --- */
+        #home h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 10px; }
+        .typing-text { font-size: 1.8rem; color: var(--primary-color); font-weight: 600; height: 40px; margin-bottom: 20px; }
+        
+        .social-icons { display: flex; gap: 15px; justify-content: center; margin: 20px 0; }
+        .social-icons a { color: var(--text-color); font-size: 1.5rem; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--card-bg); transition: 0.3s; box-shadow: var(--shadow); }
+        .social-icons a:hover { color: white; background: var(--primary-color); transform: translateY(-5px); }
+
+        /* --- About Section --- */
+        .skills-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
+        .skill-badge { background: var(--card-bg); padding: 10px 20px; border-radius: 25px; font-weight: 600; color: var(--primary-color); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05); }
+
+        /* --- Projects Grid --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; width: 100%; max-width: 1200px; }
+        .project-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; text-align: left; }
+        .project-card:hover { transform: translateY(-10px); }
+        
+        .project-img { height: 200px; background: linear-gradient(135deg, var(--card-bg), var(--bg-color)); display: flex; align-items: center; justify-content: center; color: var(--primary-color); }
+        .project-info { padding: 25px; }
+        .project-info h3 { margin-bottom: 10px; font-size: 1.4rem; }
+        .project-info p { color: #888; font-size: 0.95rem; margin-bottom: 15px; }
+        .tech-stack { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tech-stack span { background: rgba(0, 210, 255, 0.1); color: var(--primary-color); padding: 5px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600; }
+
+        /* --- Contact Form --- */
+        .contact-form { background: var(--card-bg); padding: 40px; border-radius: 15px; box-shadow: var(--shadow); width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; background: var(--bg-color); border: 1px solid rgba(128,128,128,0.2); color: var(--text-color); border-radius: 8px; font-size: 1rem; outline: none; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--primary-color); }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 20px; background: var(--card-bg); margin-top: auto; border-top: 1px solid rgba(0,0,0,0.05); }
+
+        /* --- Scroll Animation --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links { position: fixed; top: 70px; right: -100%; width: 250px; height: 100vh; background: var(--card-bg); flex-direction: column; padding-top: 50px; transition: 0.4s; }
+            .nav-links.active { right: 0; }
+            #home h1 { font-size: 2.5rem; }
+            .typing-text { font-size: 1.4rem; }
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white font-sans">
-  <div class="max-w-6xl mx-auto">
-    <nav class="p-6 flex justify-between items-center bg-gray-800 sticky top-0 z-50 rounded-b-xl">
-        <h1 class="text-3xl font-bold text-blue-400 tracking-tight">🎯</h1>
-        <div class="space-x-4 text-sm md:text-base">
-            <a href="#about"class="px-2 py-1 rounded hover:text-blue-300"> About </a>
-            <a href="#skills"class="px-2 py-1 rounded hover:text-blue-300"> Skills </a>
-            <a href="#work"class="px-2 py-1 rounded hover:text-blue-300"> Work </a>
-            <a href="#contact"class="bg-blue-600 px-2 py-1 rounded-lg hover:bg-blue-700"> Contact </a>
-        </div>
+<body class="dark-theme">
+
+    <!-- Header / Navbar -->
+    
+    <nav>
+        <a href="#home" class="logo">Hariom</HV><span></span></a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><button id="theme-toggle"><i class="fas fa-sun"></i></button></li>
+        </ul>
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
     </nav>
 
-    <header class="min-h-[80vh] flex flex-col justify-center items-center text-center px-6 pt-10">
-        <p class="uppercase tracking-[0.3em] text-xs text-blue-300 mb-3">Cybersecurity Expert</p>
-        <h2 class="text-5xl md:text-7xl font-extrabold mb-4">Hariom Vishwakarama</h2>
-        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8">
-          B.Tech IoT student growing into a cybersecurity specialist and full-stack web developer. I secure and ship modern web apps with clean code, strong auth, and tested defenses.
+    <!-- Home Section -->
+    <section id="home">
+        <h1 class="reveal">Hi, I'm Hariom Vishwakarama</h1>
+        <div class="typing-text reveal"><span id="typewriter"></span></div>
+        <p class="reveal" style="max-width: 650px; margin-bottom: 20px; color: #888; font-size: 1.1rem;">
+            
         </p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <a href="#work" class="border-2 border-blue-500 text-blue-500 px-8 py-3 rounded-full hover:bg-blue-500 hover:text-white transition">View Projects</a>
-          <a href="#contact" class="bg-blue-600 px-8 py-3 rounded-full hover:bg-blue-700 transition">Hire / Collaborate</a>
-        </div>
-    </header>
-
-    <section id="about" class="py-16 bg-gray-800 rounded-3xl mx-3 md:mx-0">
-      <div class="max-w-4xl mx-auto px-6 space-y-4 text-lg leading-relaxed text-gray-300">
-        <h3 class="text-3xl font-bold mb-4 text-center">About Me</h3>
-        <p>
-          I’m focused on building secure, performant web apps and hardening them against real-world attacks. My toolkit blends modern frontend/backend engineering with practical security testing.
-        </p>
-        <p>
-          Web: HTML/CSS/JS → React/Node.js, REST APIs, Tailwind, CI/CD with GitHub Actions, and deployments on Render/Railway.
-          Security: Linux & networking basics, Burp Suite, nmap, Wireshark, OWASP Top 10 labs, and translating findings into code fixes, secure headers, and auth hardening.
-        </p>
-        <p>
-          Motto: “Build fast. Test harder. Ship secure.” Open to freelance builds, security reviews, and collaborative product work.
-        </p>
-      </div>
+        <a href="#projects" class="btn reveal">Explore My Work</a>
     </section>
 
-    <section id="skills" class="py-16 px-6">
-        <h3 class="text-3xl font-bold mb-12 text-center">My Expertise</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-blue-500 transition">
-                <i class="fas fa-shield-alt text-4xl text-blue-500 mb-4"></i>
-                <h4 class="text-xl font-semibold mb-2">Application Security</h4>
-                <p class="text-gray-400">OWASP Top 10, Burp Suite, threat modeling, secure headers, auth/role hardening, CSP/CORS tuning.</p>
-            </div>
-            <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-blue-500 transition">
-                <i class="fas fa-code text-4xl text-blue-500 mb-4"></i>
-                <h4 class="text-xl font-semibold mb-2">Web Development</h4>
-                <p class="text-gray-400">React, Node.js/Express, REST APIs, Tailwind, GitHub Actions CI/CD, testing-first workflow.</p>
-            </div>
-            <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 hover:border-blue-500 transition">
-                <i class="fas fa-network-wired text-4xl text-blue-500 mb-4"></i>
-                <h4 class="text-xl font-semibold mb-2">Networking & Cloud</h4>
-                <p class="text-gray-400">Linux, TCP/IP basics, nmap/Wireshark, deploys on Render/Railway/AWS basics, SSL/TLS setup.</p>
-            </div>
+    <!-- About Section -->
+    <section id="about" style="background: var(--card-bg);">
+        <h2 class="section-title reveal">About Me</h2>
+        <p class="reveal" style="max-width: 800px; line-height: 1.8; font-size: 1.1rem;">
+                      B.Tech IoT student growing into a cybersecurity specialist and full-stack web developer. I secure and ship modern web apps with clean code, strong auth, and tested defenses.
+        </p>
+        <div class="skills-container reveal">
+            <div class="skill-badge"><i class="fas fa-shield-alt"></i> Cyber Security</div>
+            <div class="skill-badge"><i class="fab fa-html5"></i> HTML Web Dev</div>
+            <div class="skill-badge"><i class="fas fa-code"></i> C++ Programming</div>
+            <div class="skill-badge"><i class="fas fa-bug"></i> Vulnerability Testing</div>
         </div>
     </section>
 
-    <section id="work" class="py-16 bg-gray-800 px-6 rounded-3xl mx-3 md:mx-0">
-        <h3 class="text-3xl font-bold mb-12 text-center">Featured Work</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            <div class="relative group overflow-hidden rounded-xl">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800" alt="Secure Task Manager" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500" loading="lazy">
-                <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                    <h4 class="text-xl font-bold">Secure Task Manager</h4>
-                    <p class="text-center px-4">React + Node + JWT auth + role-based access; CSP/CORS hardened and ZAP scan remediated.</p>
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title reveal">Featured Projects</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-shield-halved fa-4x"></i></div>
+                <div class="project-info">
+                    <h3>Secure Web Portal</h3>
+                    <div class="tech-stack"><span>HTML</span><span>CSS</span><span>Security Auditing</span></div>
+                    <p>A responsive web application built with a security-first approach, protected against OWASP vulnerabilities like XSS and SQLi.</p>
                 </div>
             </div>
-            <div class="relative group overflow-hidden rounded-xl">
-                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800" alt="OWASP Lab Writeups" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500" loading="lazy">
-                <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                    <h4 class="text-xl font-bold">OWASP Lab Writeups</h4>
-                    <p class="text-center px-4">PortSwigger labs with exploit → mitigation notes; fixes demoed in code and configs.</p>
+
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-network-wired fa-4x"></i></div>
+                <div class="project-info">
+                    <h3>Network Traffic Analyzer</h3>
+                    <div class="tech-stack"><span>C++</span><span>Cyber Security</span></div>
+                    <p>A custom packet sniffing tool developed in C++ to monitor local network traffic and detect potential cyber threats in real-time.</p>
                 </div>
             </div>
+
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-user-secret fa-4x"></i></div>
+                <div class="project-info">
+                    <h3>Vulnerability Assessment Lab</h3>
+                    <div class="tech-stack"><span>Pen-Testing</span><span>HTML</span></div>
+                    <p>An isolated web environment designed to safely test, demonstrate, and patch common security vulnerabilities.</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <section id="contact" class="py-16 px-6 text-center">
-        <h3 class="text-3xl font-bold mb-6">Let's Work Together</h3>
-        <p class="text-gray-400 mb-8">Open for freelance builds, security reviews, and collabs.</p>
-        <div class="flex justify-center space-x-6">
-            <a href="https://www.instagram.com/editorhariom.in?igsh=MWF4ZHU5cnU0dzMxbg==" class="text-3xl hover:text-blue-500" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/hariom-vishwakaramaa-352736383?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="text-3xl hover:text-blue-500" aria-label="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="mailto:ho5444024@gmail.com" class="text-3xl hover:text-blue-500" aria-label="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="https://github.com/hariom-vishwakarama00" target="_blank" class="social-btn github">
-      <i class="fa-brands fa-github"></i>
-    </a>
+    <!-- Contact Section -->
+    <section id="contact" style="background: var(--card-bg);">
+        <h2 class="section-title reveal">Get In Touch</h2>
+        <p class="reveal" style="margin-bottom: 30px; color: #888;">Looking to build a secure web app or need a security audit? Let's talk!</p>
+        <div class="social-icons reveal">
+            <a href="https://github.com/hariom-vishwakarama00"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/hariom-vishwakarama-352736383?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:hariomvishwakarama09@gmail.com"><i class="fas fa-envelope"></i></a>
         </div>
+        
     </section>
 
-    <footer class="p-6 text-center text-gray-500">
-        © 2026 Hariom Vishwakarama. All Rights Reserved.
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Hariom Vishwakarama. Designed with secure code</p>
     </footer>
-  </div>
+
+    <!-- Scripts for Animations & Features -->
+    <script>
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        const icon = themeBtn.querySelector('i');
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            if(body.classList.contains('dark-theme')){
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        // Mobile Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+
+        // Typewriter Effect
+        const textArray = ["Cyber Security Expert", "Web Developer"];
+        const typingElement = document.getElementById("typewriter");
+        let textIndex = 0, charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textIndex].length) {
+                typingElement.textContent += textArray[textIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 80);
+            } else {
+                setTimeout(erase, 2000);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typingElement.textContent = textArray[textIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, 40);
+            } else {
+                textIndex = (textIndex + 1) % textArray.length;
+                setTimeout(type, 500);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", () => setTimeout(type, 1000));
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
 </body>
 </html>
